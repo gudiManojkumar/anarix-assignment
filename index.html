@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI SQL Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="hero">
+    <div class="card">
+      <h1>AI-Powered SQL Assistant for E-commerce</h1>
+      <p><b>Ask questions. Get SQL. Discover insights.</b></p>
+
+      <form id="query-form">
+        <div id="user-question" class="bold-text hidden"></div>
+
+        <input
+          type="text"
+          id="question"
+          name="question"
+          placeholder="e.g., Which product had the highest CPC?"
+          required
+        />
+        <button type="submit">Generate SQL</button>
+      </form>
+
+      <div id="result-container" class="hidden">
+        <h3><strong>SQL Query</strong></h3>
+        <pre><strong id="sql-query"></strong></pre>
+
+        <h3><strong>Answer</strong></h3>
+        <pre><strong id="natural-answer"></strong></pre>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Powered by Gemini + FastAPI</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("query-form");
+    const questionInput = document.getElementById("question");
+    const resultContainer = document.getElementById("result-container");
+    const sqlQueryEl = document.getElementById("sql-query");
+    const sqlAnswerEl = document.getElementById("natural-answer");
+
+    form.addEventListener("submit", async function handleSubmit(event) {
+      event.preventDefault();
+      const question = questionInput.value.trim();
+      if (!question) return;
+
+      resultContainer.classList.remove("hidden");
+      sqlQueryEl.innerHTML = "<strong>Generating SQL...</strong>";
+      sqlAnswerEl.innerHTML = "";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: question }),
+        });
+
+        const data = await response.json();
+
+        sqlQueryEl.innerHTML = `<strong>${data.sql_query || "SQL generation failed."}</strong>`;
+        sqlAnswerEl.innerHTML = `<strong>${data.answer || "Could not generate AI answer."}</strong>`;
+      } catch (err) {
+        console.error("Error:", err.message);
+        sqlQueryEl.innerHTML = "<strong>Could not generate SQL.</strong>";
+        sqlAnswerEl.innerHTML = "<strong>Could not generate AI answer.</strong>";
+      }
+    });
+  </script>
+</body>
+</html>
