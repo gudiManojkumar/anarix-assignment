@@ -13,23 +13,8 @@ JavaScript : Handles dynamic form submission and DOM updates using Fetch API.
 
 🗂️ Project Structure
 
-ecommerce/
-├── backend/
-│   ├── data_load.py           # CSV to DB loader (optional)
-│   ├── llm_agent.py           # LLM integration: SQL and answer generation
-│   ├── main.py                # FastAPI server
-│   ├── models.sql             # SQL schema definition
-│   ├── query_engine.py        # Executes SQL queries
-├── datasets/                  # Raw data files
-│   ├── ad_sales.csv
-│   ├── eligibility.csv
-│   └── total_sales.csv
-├── .env                       # GEMINI_API_KEY here
-├── ecommerce.db               # Preloaded SQLite database
-├── index.html                 # Main frontend page
-├── styles.css                 # Styling for UI
-├── requirements.txt           # Python dependencies
-├── Pipfile / Pipfile.lock     # Optional pipenv support
+<img width="689" height="416" alt="image" src="https://github.com/user-attachments/assets/b9c227ce-2ace-4505-94cb-df60a858ee4e" />
+
 
 Features
 1.Ask questions like “What are total sales?”
